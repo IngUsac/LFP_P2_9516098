@@ -1,6 +1,6 @@
 import tkinter as tk
-import time
 import funciones as fc
+import cargarMD as MD
 
 def ventana_bienvenida():
     # Crear la ventana de bienvenida
@@ -14,7 +14,7 @@ def ventana_bienvenida():
     label = tk.Label(Info,text ="Vacaciones - Junio - Sección: 'P'",foreground="green").place(x=150, y=70)
     label = tk.Label(Info,text ="Carnet: 9516098",foreground="green").place(x=150, y=90)
     label = tk.Label(Info,text ="Gustavo Adolfo Lorenzana Ecuté",foreground="green").place(x=150, y=110)
-    label = tk.Label(Info, text="¡Bienvenido a la aplicacion Spark Stack !",foreground="blue",font=("Arial", 15)).place(x=150, y=150)
+    label = tk.Label(Info, text="¡Bienvenido a la aplicación Spark Stack !",foreground="blue",font=("Arial", 15)).place(x=100, y=150)
 
     # Cerrar la ventana de bienvenida después de 5 segundos
     Info.after(5000, Info.destroy)
@@ -26,8 +26,8 @@ def ventana_bienvenida():
 def ventana_principal():
     # Crear la ventana principal
     ventana = tk.Tk()
-    ventana.title("Sistema de validacion de automatas Spark Stack")
-    ventana.geometry("600x200")
+    ventana.title("Sistema de validación de autómatas Spark Stack")
+    ventana.geometry("550x200")
 
     # Definir la función para cerrar la ventana principal y mostrar la ventana de despedida
     def cerrar_ventana():
@@ -46,7 +46,7 @@ def ventana_principal():
         despedida.after(5000, despedida.destroy)
 
         despedida.mainloop()
-
+  
    
     label = tk.Label(ventana, text="Sistema Spark Stack",foreground="blue",font=("Arial", 20))
     label.grid(sticky="nsew")
@@ -87,8 +87,9 @@ def ventana_principal():
     # Opción "Ayuda"
     menu_ayuda = tk.Menu(menu_principal, tearoff=False)
     menu_principal.add_cascade(label="Ayuda", menu=menu_ayuda)
-    menu_ayuda.add_command(label="Manual Técnico", command=fc.manual_t)
-    menu_ayuda.add_command(label="Manual de Usuario", command=fc.manual_u)
+    menu_ayuda.add_command(label="Manual Técnico", command=MD.manualTecnico)
+    menu_ayuda.add_command(label="Manual de Usuario", command=MD.manualUsuariomd)
+ 
 
     # Mostrar la ventana principal
     ventana.mainloop()
