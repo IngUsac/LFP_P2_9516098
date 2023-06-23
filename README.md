@@ -12,22 +12,25 @@
 ```python
 # Manejo de Automatas de Pila 
 ```
-### Tareas del proyecto
+### Tareas del proyecto 🦾
 ---
+
 * [x] Pantalla de bienvenida
+* [x] Ventana principal
 * [x] Menu principal
-* [ ] Cargar Archivo
-* [x] Pantalla de despedida
+* [ ] Cargar archivo 
+* [ ] informacion del automata
+* [ ] Arbol de derivación
+* [ ] Cargar archivo pila
+* [ ] informacion pila 
+* [ ] Validar cadena pila
+* [ ] Ruta_de validacion de cadena
+* [ ] Mostrar recorido paso a paso
+* [x] Desplegar manual de Usuario en Markdown
+* [x] Desplegar manual tecnico en Markdown
+* [x] Pantalla de despedida al cerrar
 
 ---
-## Objetivos
- 
-* Implementar un software en Python que permitan plasmar los conocimientos sobre lenguajes regulares, adquiridos en la unidad 3 del programa del curso de lenguajes formales y de programación. 
-* Dar continuidad a la implementación de soluciones de software empleando paradigmas de programación. 
-* Utilizar la herramienta de Graphviz para la creación de autómatas. 
----
-## Descripción del Proyecto
-Con el fin de entender y profundizar en el tema de gramáticas regulares, se le 
 
 ---
 ## Notas Importantes: 
