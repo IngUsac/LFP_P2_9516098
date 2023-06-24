@@ -21,7 +21,7 @@
 * [x] Cargar archivo 
 * [x] Validar nombres repetidos de gramaticas
 * [ ] informacion del automata
-* [ ] Arbol de derivación
+* [ ] Arbol de derivación  
 * [ ] Cargar archivo pila
 * [ ] informacion pila 
 * [ ] Validar cadena pila

@@ -97,4 +97,4 @@ def ventana_principal():
 
 # Llamar a las funciones para mostrar las ventanas
 ventana_bienvenida()
-ventana_principal()
+ventana_principal() 

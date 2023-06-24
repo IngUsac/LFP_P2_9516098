@@ -98,9 +98,9 @@ def cargar_archivo_glc(): # Permite cargar N gramaticas libres del contexto
         messagebox.showinfo("Validación de Gramática", "La pila está vacía")
 
 
-  
+   
 
-
+ 
 def informacion_glc(): # Muestra todos los nombres de las gramaticas que se encuentran cargados en el sistema
 
     def seleccionar_elemento():
