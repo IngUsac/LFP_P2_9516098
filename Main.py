@@ -17,7 +17,7 @@ def ventana_bienvenida():
     label = tk.Label(Info, text="¡Bienvenido a la aplicación Spark Stack !",foreground="blue",font=("Arial", 15)).place(x=100, y=150)
 
     # Cerrar la ventana de bienvenida después de 5 segundos
-    Info.after(5000, Info.destroy)
+    Info.after(500, Info.destroy)
 
     # Mostrar la ventana de bienvenida
     Info.mainloop()
@@ -43,7 +43,7 @@ def ventana_principal():
         despedida.grid_rowconfigure(0, weight=1)
         despedida.grid_columnconfigure(0, weight=1)
 
-        despedida.after(5000, despedida.destroy)
+        despedida.after(500, despedida.destroy)
 
         despedida.mainloop()
   

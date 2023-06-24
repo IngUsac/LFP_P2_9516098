@@ -3,3 +3,4 @@ __pycache__
 importarAP.py
 automataPila.py
 *.html
+*.glc

@@ -15,9 +15,20 @@
 ### Tareas del proyecto
 ---
 * [x] Pantalla de bienvenida
+* [x] Ventana principal
 * [x] Menu principal
-* [ ] Cargar Archivo
-* [x] Pantalla de despedida
+* [x] Cargar archivo 
+* [x] Validar nombres repetidos de gramaticas
+* [ ] informacion del automata
+* [ ] Arbol de derivación
+* [ ] Cargar archivo pila
+* [ ] informacion pila 
+* [ ] Validar cadena pila
+* [ ] Ruta_de validacion de cadena
+* [ ] Mostrar recorido paso a paso
+* [x] Desplegar manual de Usuario en Markdown
+* [x] Desplegar manual tecnico en Markdown
+* [x] Pantalla de despedida al cerrar
 
 ---
 ## Objetivos
@@ -33,8 +44,7 @@ Con el fin de entender y profundizar en el tema de gramáticas regulares, se le
 ## Notas Importantes: 
   
 * El proyecto deberá de desarrollarse de forma individual. 
-* El proyecto  
- 
+
   
 ## Fecha de entrega: 30 de junio de 2023 antes de las 23:59. 
 ---

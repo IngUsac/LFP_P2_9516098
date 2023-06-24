@@ -18,7 +18,8 @@
 * [x] Pantalla de bienvenida
 * [x] Ventana principal
 * [x] Menu principal
-* [ ] Cargar archivo 
+* [x] Cargar archivo 
+* [x] Validar nombres repetidos de gramaticas
 * [ ] informacion del automata
 * [ ] Arbol de derivación
 * [ ] Cargar archivo pila
