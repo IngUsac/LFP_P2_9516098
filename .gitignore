@@ -4,3 +4,7 @@ importarAP.py
 automataPila.py
 *.html
 *.glc
+*.ap
+grafo
+*.png
+*.txt

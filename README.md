@@ -19,9 +19,11 @@
 * [x] Menu principal
 * [x] Cargar archivo 
 * [x] Validar nombres repetidos de gramaticas
-* [ ] informacion del automata
-* [ ] Arbol de derivación
-* [ ] Cargar archivo pila
+* [x] informacion del automata
+* [x] mostrar correctamente las transiciones
+* [x] Sustituir el simbolo ">" por "|" en las transiciones
+* [x] Arbol de derivación  
+* [x] Cargar archivo pila
 * [ ] informacion pila 
 * [ ] Validar cadena pila
 * [ ] Ruta_de validacion de cadena

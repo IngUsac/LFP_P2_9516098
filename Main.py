@@ -1,6 +1,7 @@
 import tkinter as tk
 import funciones as fc
 import cargarMD as MD
+import funcionesAP as ap
 
 def ventana_bienvenida():
     # Crear la ventana de bienvenida
@@ -21,7 +22,6 @@ def ventana_bienvenida():
 
     # Mostrar la ventana de bienvenida
     Info.mainloop()
-
 
 def ventana_principal():
     # Crear la ventana principal
@@ -46,7 +46,7 @@ def ventana_principal():
         despedida.after(500, despedida.destroy)
 
         despedida.mainloop()
-  
+ 
    
     label = tk.Label(ventana, text="Sistema Spark Stack",foreground="blue",font=("Arial", 20))
     label.grid(sticky="nsew")
@@ -75,11 +75,11 @@ def ventana_principal():
     sub_menu1.add_command(label="Arbol de derivación",command=fc.arbol_derivacion)
 
     # submenu de Modulo autómatas de pila
-    sub_menu2.add_command(label="Cargar archivo",command=fc.cargar_archivo_pila)
-    sub_menu2.add_command(label="Mostrar información del autómata",command=fc.informacion_pila)
-    sub_menu2.add_command(label="Validar cadena",command=fc.validar_cadena_pila)
-    sub_menu2.add_command(label="Ruta de validación",command=fc.ruta_validacion_cadena)
-    sub_menu2.add_command(label="Recorrido paso a paso",command=fc.recorido_paso_paso)
+    sub_menu2.add_command(label="Cargar archivo",command=ap.cargar_archivo_pila)
+    sub_menu2.add_command(label="Mostrar información del autómata",command=ap.informacion_pila)
+    sub_menu2.add_command(label="Validar cadena",command=ap.validar_cadena_pila)
+    sub_menu2.add_command(label="Ruta de validación",command=ap.ruta_validacion_cadena)
+    sub_menu2.add_command(label="Recorrido paso a paso",command=ap.recorido_paso_paso)
     menu_archivo.add_separator()
     menu_archivo.add_command(label="Salir", command=cerrar_ventana)
 
@@ -93,7 +93,6 @@ def ventana_principal():
 
     # Mostrar la ventana principal
     ventana.mainloop()
-
 
 # Llamar a las funciones para mostrar las ventanas
 ventana_bienvenida()

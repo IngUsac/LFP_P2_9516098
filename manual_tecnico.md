@@ -20,9 +20,11 @@
 * [x] Menu principal
 * [x] Cargar archivo 
 * [x] Validar nombres repetidos de gramaticas
-* [ ] informacion del automata
-* [ ] Arbol de derivación  
-* [ ] Cargar archivo pila
+* [x] informacion del automata
+* [x] mostrar correctamente las transiciones
+* [x] Sustituir el simbolo ">" por "|" en las transiciones
+* [x] Arbol de derivación  
+* [x] Cargar archivo pila
 * [ ] informacion pila 
 * [ ] Validar cadena pila
 * [ ] Ruta_de validacion de cadena
@@ -34,24 +36,47 @@
 😮‍💨
 ---
 
-### Funciones declaradas 👾 
+### Funciones principalesdeclaradas 👾 
 
 
 ```python
+    
+#Main.py
 
-def ventana_bienvenida():  # Muestra una ventana de bienvenida durante 5 segundos
-def ventana_principal():   # Crear la ventana principal
-def cargar_archivo_glc(): # Permite cargar N gramaticas libres del contexto
-def informacion_glc(): # Muestra todos los nombres de las gramaticas que se encuentran cargados en el sistema
-def arbol_derivacion(): # Muestra arbol de derivacion previa solicitud del nombre de la gramatica 
-def cargar_archivo_pila(): #permite cargar N autómatas de pila al sistema
-def informacion_pila():  # Muestra informacion del automata almacenado previamente
-def validar_cadena_pila(): # Valida una cadena con un automata previamente cargado por el usuario
+def ventana_bienvenida():   # Muestra una ventana de bienvenida durante 5 segundos y luego abre la ventana principal
+def ventana_principal():    # Crear la ventana principal
+def cerrar_ventana():       # Cierra la ventana principal y muestra la ventana de despedida durante 5 segundos
+
+#Modulo Gramaticas libres de contexto
+#funciones.py
+def cargar_archivo_glc():   # Permite cargar N gramaticas libres del contexto
+def informacion_glc():      # Muestra todos los nombres de las gramaticas que se encuentran cargados en el sistema
+def arbol_derivacion():     # Muestra arbol de derivacion previa solicitud del nombre de la gramatica 
+def cargar_archivo_pila():  # Permite cargar N autómatas de pila al sistema
+def informacion_pila():     # Muestra informacion del automata almacenado previamente
+def validar_cadena_pila():  # Valida una cadena con un automata previamente cargado por el usuario
 def ruta_validacion_cadena(): #Muestra las transiciones hechas por una cadena ingresada por el usuario, a un automata previamente cargado
-def recorido_paso_paso(): # Muestra paso a paso el comportamiento del automata al validar una cadena ingresada por el usuario, a un automata previamente cargado
-def cerrar_ventana():      # Cierra la ventana principal y muestra la ventana de despedida durante 5 segundos
+def recorido_paso_paso():   # Muestra paso a paso el comportamiento del automata al validar una cadena ingresada por el usuario, a un automata previamente cargado
+def cerrar_ventana():       # Cierra la ventana principal y muestra la ventana de despedida durante 5 segundos
+
+
+#generarderivacion.py 
+class NodoDerivacion:       # Para manejar el arbol de derivaciones
+def graficar(nodo,nivel):  # para Generar grafo
+def construir_arbol_derivacion(glc):  # para armar el arbol de derivacion
+    nodo = NodoDerivacion(glc.s_inicial)
+class GramaticaLibredeContexto: # Para manejar el la pila 
+def genera_arbol_derivacion( nom,nt,t,i,prod):   # para generar el arbol de derivacion
+def visualizar_arbol_derivacion(arbol_derivacion) #despliega el arbol por medio del metodo graficar  
+
+#Modulo Automatas de Pila
+def cargar_archivo_pila(): # Permite cargar N Automatas de Pila
+
+
 
 ```
+
+
 ---
 ## Repositorio del proyecto 
 ---

@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
-
+from generarderivacion import genera_arbol_derivacion
 
 class GramaticaLibredeContexto:
     def __init__(self, nombre, no_terminal, terminal, s_inicial, producciones ):
@@ -12,17 +12,13 @@ class GramaticaLibredeContexto:
         self.producciones = producciones
 
 pila = []
+archivoentrada=""
 def cargar_archivo_glc(): # Permite cargar N gramaticas libres del contexto
 
     archivoentrada=filedialog.askopenfilename(initialdir = "/LFP_P2_9516098",title = "Archivo de Entrada",filetypes = (('Archivos de Gramaticas Libres de Contexto', '*.glc'),("Todos los Archivos","*.*")))
     if archivoentrada:
-        messagebox.showinfo("Carga de Archivo", " El archivo de entrada se cargó correctamente")
-
-    # Crear una lista vacía para representar la pila
-    #pila = []
-
-    #C:\Users\WINDOWS 10\Desktop\Repositorio\LFP\LFP_P2_9516098
-
+        carga=True
+        
     # Leer el archivo de texto línea por línea
     with open(archivoentrada, "r") as archivo:
         # Variables para almacenar los datos de la gramatica actual
@@ -86,19 +82,11 @@ def cargar_archivo_glc(): # Permite cargar N gramaticas libres del contexto
                 if i > 4 and existe==False: # para separar las n producciones del archivo de entrada y guardarlo en la pila
                         # Guardar las producciones
                     producciones.append(datos[0].rstrip("'")) 
+    if carga:
+        messagebox.showinfo("Carga de Archivo", " El archivo de entrada se cargó correctamente")            
 
-        
-    # Imprimir las instancias de GramaticaLibredeContexto en la pila
-    #for gramatica in pila:
-        #print("GLC --> ",gramatica.nombre)
-        #print("Producciones --> ",gramatica.producciones)
-
-    # Verificar si la pila está vacía
     if not pila:
         messagebox.showinfo("Validación de Gramática", "La pila está vacía")
-
-
-   
 
  
 def informacion_glc(): # Muestra todos los nombres de las gramaticas que se encuentran cargados en el sistema
@@ -107,16 +95,25 @@ def informacion_glc(): # Muestra todos los nombres de las gramaticas que se encu
         indice = int(entry.get()) - 1
         if 0 <= indice < len(pila):
             glc_seleccionada = pila[indice]
-            label_glc1.config(text=f" -Nombre de la Gramatica: {glc_seleccionada.nombre}"+f"  -No Terminales: {glc_seleccionada.no_terminal} "+f"  -Terminales: {glc_seleccionada.terminal} "+f"  -Estado Inicial: {glc_seleccionada.s_inicial} ")
+            label_glc1.config(text=f" -Nombre: {glc_seleccionada.nombre}"+f"  -No Terminales: {glc_seleccionada.no_terminal} "+f"  -Terminales: {glc_seleccionada.terminal} "+f"  -Estado Inicial: {glc_seleccionada.s_inicial} ")
             label_glc1.place(x=150,y=100)
           
           
-        
+            tk.Label(ventana, text=" Producciones: ").place(x=150,y=120)
             texto_cuadro.delete("1.0", tk.END)  # Borrar contenido previo del cuadro de texto
-            texto_cuadro.insert(tk.END, glc_seleccionada.producciones)  # Insertar el contenido del elemento en el cuadro de texto
-
-        
-            
+            estado_anterior = ""
+            for cadena in glc_seleccionada.producciones:
+                noTerminal, produce, produccion = cadena.partition("::=")
+                if noTerminal == estado_anterior:
+                    noTerminal = "  "
+                    produce ="|"
+                    texto_cuadro.insert(tk.END, "\n"+noTerminal+" "+produce+" "+produccion)  # Insertar el contenido del elemento en el cuadro de texto
+                else:
+                    # Obtener los valores separados de la cadena                   
+                    produce=">"
+                    # Imprimir los valores extraídos
+                    texto_cuadro.insert(tk.END, "\n"+noTerminal+" "+produce+" "+produccion)  # Insertar el contenido del elemento en el cuadro de texto
+                    estado_anterior = noTerminal 
 
         else:
             messagebox.showinfo("Seleccionar de Gramática", "Numero de Gramatica invalido")
@@ -150,7 +147,7 @@ def informacion_glc(): # Muestra todos los nombres de las gramaticas que se encu
         tk.Label(ventana, text=" Informacion de la Gramatica: ").place(x=150,y=80)
         label_glc1=tk.Label(ventana, text="")
         label_glc1.place(x=150,y=100)
-        tk.Label(ventana, text=" Producciones: ").place(x=150,y=120)
+        
      
 
         texto_cuadro = tk.Text(ventana, height=20, width=75)
@@ -163,34 +160,74 @@ def informacion_glc(): # Muestra todos los nombres de las gramaticas que se encu
 
         # Crear un botón de cierre
         tk.Button(ventana, text=" Cerrar ", command=cerrar_ventana).place(x=675,y=50)
-       
-
-
-
-
-
-"""
-        for gramatica in pila:
-            print("GLC --> ",gramatica.nombre)
-            print("Producciones --> ",gramatica.producciones)
-
-        # Verificar si la pila está vacía
-
-
-
-    cadena = ['B::=bBAab']
-
-    # Obtener los valores separados de la cadena
-    noTerminal, produce, produccion = cadena[0].partition("::=")
-    produce=">"
-    # Imprimir los valores extraídos
-    print("noTerminal:--> ", noTerminal)
-    print("produce:--> ", produce)
-    print("produccion:--> ", produccion)
-"""
 
 
 def arbol_derivacion(): # Muestra arbol de derivacion previa solicitud del nombre de la gramatica 
+    def seleccionar_elemento():
+        indice = int(entry.get()) - 1
+        if 0 <= indice < len(pila):
+            glc_seleccionada = pila[indice]
+            label_glc1.config(text=f"-Nombre: {glc_seleccionada.nombre}"+f"  -No Terminales: {glc_seleccionada.no_terminal} "+f"  -Terminales: {glc_seleccionada.terminal} "+f"  -Estado Inicial: {glc_seleccionada.s_inicial} ")
+            label_glc1.place(x=160,y=100)
+          
+            label_glc2.config(text=f"Producciones:  {glc_seleccionada.producciones}")
+            label_glc2.place(x=160,y=120)
+            
+            #----------------------------------------------------------------
+            # llamar funcion para crear arbol de derivacion
+           
+            genera_arbol_derivacion(glc_seleccionada.nombre,glc_seleccionada.no_terminal,glc_seleccionada.terminal,glc_seleccionada.s_inicial, glc_seleccionada.producciones)
+
+            #----------------------------------------------------------------    
+
+        else:
+            messagebox.showinfo("Seleccionar de Gramática", "Numero de Gramatica invalido")
+            
+            label_glc1.config(text="") # limpia info de la gramatica
+            label_glc1.place(x=160,y=100)
+            label_glc2.config(text="")  # limpia producciones
+            label_glc2.place(x=160,y=120)
+          
+
+    if not pila:
+        messagebox.showinfo("Arbol de validación", "La pila está vacía")
+    else:
+
+
+    # Crear una nueva ventana para ver las gramaticas disponibles
+        ventana = tk.Toplevel()
+        ventana.title("Arbol de derivación")
+        ventana.geometry("800x300")
+
+        tk.Label(ventana, text="Listado de Gramaticas disponibles").place(x=25,y=30)
+        for i, gramatica in enumerate(pila):
+            tk.Label(ventana, text=f"{i+1}: {gramatica.nombre}").place(x=25,y=(60+(20*i)))  # para sacar el listado de gramaticas
+       
+
+        entry = tk.Entry(ventana)
+        entry.place(x=600,y=30)
+
+        tk.Label(ventana, text=" Ingrese el numero de la Gramatica para desplegar el arbol  ").place(x=250,y=30)  # Solicitar numero de gramatica a consultar
+        tk.Button(ventana, text=" Consultar GLC y ver Arbol ", command=seleccionar_elemento).place(x=600,y=60)     
+
+        # labels de la ventana
+        tk.Label(ventana, text="Informacion de la Gramatica: ").place(x=160,y=80)
+        label_glc1=tk.Label(ventana, text="")
+        label_glc1.place(x=160,y=100)
+
+        tk.Label(ventana, text="Producciones:").place(x=160,y=120)
+        label_glc2=tk.Label(ventana, text="")
+        label_glc2.place(x=160,y=120)
+     
+
+        # Función para cerrar la ventana
+        def cerrar_ventana():
+            ventana.destroy()
+
+        # Crear un botón de cierre
+        tk.Button(ventana, text=" Cerrar ", command=cerrar_ventana).place(x=600,y=100)
+
+
     pass
 
 def cargar_archivo_pila(): #permite cargar N autómatas de pila al sistema
