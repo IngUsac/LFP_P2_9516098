@@ -1,4 +1,3 @@
-import graphviz
 from graphviz import Digraph
 import random
 
@@ -29,13 +28,11 @@ def graficar(nodo,nivel):  # para Generar grafo
     if str(nodo).strip() != "":  # verifica que no venga vacio el nodo
         if len(str(nodo))==1:
             if nivel==0:
-                dot.node(str(nodo)+str(nivel),str(nodo)) #genera nodo inicial
-                print("genera nodo inicial : ",str(nodo)+str(nivel), " nivel: ",nivel," label = ", str(nodo))    
+                dot.node(str(nodo)+str(nivel),str(nodo)) #genera nodo inicial               
                 nodoanterior = (str(nodo)+str(nivel))
             else:
-                dot.node(str(nodo)+str(nivel),str(nodo))                
-                print("genera nodo: ",str(nodo)+str(nivel), " nivel: ",nivel," label = ", str(nodo))    #genera nodos
-                dot.edge(str(nodoanterior),str(nodo)+str(nivel))                                              #Genera Transiciones              
+                dot.node(str(nodo)+str(nivel),str(nodo))                                 #genera nodos
+                dot.edge(str(nodoanterior),str(nodo)+str(nivel))                         #Genera Transiciones              
                 nodoanterior = (str(nodo)+str(nivel))
                 nodovacio = str(nodoanterior)
         else:   # Separar la expresion si tiene mas de 1 simbolo T o NT
@@ -48,17 +45,15 @@ def graficar(nodo,nivel):  # para Generar grafo
             for hoja in cadena:
                 i=random.randint(0,1000)
                 if not hoja in nodoanterior:                    
-                    dot.node(str(hoja)+str(i),str(hoja))                
-                    print("genera hoja: ",str(hoja), " nivel ",nivel," label = ", str(hoja))                #genera nodos
-                    dot.edge(str(nodonuevo),str(hoja)+str(i))                                            #Genera Transiciones
-                    print("Transicion nodo: ",str(nodonuevo), " -------> ",str(hoja)+str(i))
-                    #nodoanterior = str(nodovacio) 
+                    dot.node(str(hoja)+str(i),str(hoja))                               #genera nodos
+                    dot.edge(str(nodonuevo),str(hoja)+str(i))                          #Genera Transiciones
+                                        
                 else:
                     dot.node(str(hoja)+str(i),str(hoja)) 
-                    nodohijo = (str(hoja)+str(i))  
-                    print("genera nodo: ",str(nodohijo), " nivel ",nivel," label = ", str(hoja))                #genera nodos
-                    dot.edge(str(nodonuevo),str(nodohijo))                                            #Genera Transiciones
-                    print("Transicion nodo: ",str(nodonuevo), " -------> ",str(nodohijo))
+                    nodohijo = (str(hoja)+str(i))                 #genera nodos
+                    dot.edge(str(nodonuevo),str(nodohijo))                                            #Genera Transiciones                    
+            if nodohijo=="r":
+                nodohijo = nodonuevo
             nodoanterior = nodohijo
         
     else:        
@@ -84,8 +79,7 @@ def construir_arbol_derivacion_aux(produccion, glc):
     return nodo
 
 def visualizar_arbol_derivacion(nodo, nivel=0):
-    #print("  " * nivel + str(nodo))
-    #----------------------------------------------------------------
+   
     graficar(nodo,nivel)  # Generar grafo
     for hijo in nodo.hijos:
         visualizar_arbol_derivacion(hijo, nivel + 1)

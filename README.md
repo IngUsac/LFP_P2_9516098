@@ -25,7 +25,7 @@
 * [x] Arbol de derivación  
 * [x] Cargar archivo pila
 * [ ] informacion pila 
-* [ ] Validar cadena pila
+* [x] Validar cadena pila
 * [ ] Ruta_de validacion de cadena
 * [ ] Mostrar recorido paso a paso
 * [x] Desplegar manual de Usuario en Markdown

@@ -26,7 +26,7 @@
 * [x] Arbol de derivación  
 * [x] Cargar archivo pila
 * [ ] informacion pila 
-* [ ] Validar cadena pila
+* [x] Validar cadena pila
 * [ ] Ruta_de validacion de cadena
 * [ ] Mostrar recorido paso a paso
 * [x] Desplegar manual de Usuario en Markdown
@@ -70,9 +70,18 @@ def genera_arbol_derivacion( nom,nt,t,i,prod):   # para generar el arbol de deri
 def visualizar_arbol_derivacion(arbol_derivacion) #despliega el arbol por medio del metodo graficar  
 
 #Modulo Automatas de Pila
+
 def cargar_archivo_pila(): # Permite cargar N Automatas de Pila
+def informacion_pila():     #Permite mostrar la informacionde los Automatas de pila y genera pdf y grafo
+def validar_cadena_pila():  #Permite validar si una cadena ingresada es aceptada o rechazada por el AP seleccionado
 
 
+# cargarMD.py    Modulo para cargar los manuales de usuario en Markdown
+def abrir_manual_tecnico(): #abre manual tecnico en Markdown
+def abrir_manual_usuario(): # Abre Manual de Usuario en Markdown
+
+# manejaAP.py    Modulo para validar las cadenas ingresadas del AP
+def validar_cadena(Ap_seleccionado,cadena): #Valida la cadena ingresada por el usuario
 
 ```
 

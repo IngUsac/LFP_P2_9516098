@@ -7,7 +7,7 @@ import markdown2
 #epsilon = '\u03B5'
 #print(epsilon)
 
-def abrir_manual_tecnico():
+def abrir_manual_tecnico(): # Abre manual tecnico en Markdown
 
     markdown_file = 'manual_tecnico.md'
 
@@ -26,7 +26,7 @@ def abrir_manual_tecnico():
 
  
 
-def abrir_manual_usuario():
+def abrir_manual_usuario(): # Abre Manual de Usuario en Markdown
     # Ruta del archivo Markdown
     markdown_file = 'manual_usuario.md'
 

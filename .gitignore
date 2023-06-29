@@ -5,6 +5,7 @@ automataPila.py
 *.html
 *.glc
 *.ap
-grafo
+grafoAP
 *.png
 *.txt
+*.pdf

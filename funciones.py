@@ -81,7 +81,10 @@ def cargar_archivo_glc(): # Permite cargar N gramaticas libres del contexto
 
                 if i > 4 and existe==False: # para separar las n producciones del archivo de entrada y guardarlo en la pila
                         # Guardar las producciones
+                    datos[0]= datos[0].replace(" ","").rstrip()  # elimina espacios en blanco de las producciones
                     producciones.append(datos[0].rstrip("'")) 
+                
+                    
     if carga:
         messagebox.showinfo("Carga de Archivo", " El archivo de entrada se cargó correctamente")            
 
@@ -205,17 +208,17 @@ def arbol_derivacion(): # Muestra arbol de derivacion previa solicitud del nombr
        
 
         entry = tk.Entry(ventana)
-        entry.place(x=600,y=30)
+        entry.place(x=575,y=30)
 
         tk.Label(ventana, text=" Ingrese el numero de la Gramatica para desplegar el arbol  ").place(x=250,y=30)  # Solicitar numero de gramatica a consultar
-        tk.Button(ventana, text=" Consultar GLC y ver Arbol ", command=seleccionar_elemento).place(x=600,y=60)     
+        tk.Button(ventana, text=" Consultar GLC y ver Arbol ", command=seleccionar_elemento).place(x=575,y=60)     
 
         # labels de la ventana
         tk.Label(ventana, text="Informacion de la Gramatica: ").place(x=160,y=80)
         label_glc1=tk.Label(ventana, text="")
         label_glc1.place(x=160,y=100)
 
-        tk.Label(ventana, text="Producciones:").place(x=160,y=120)
+        tk.Label(ventana, text=" ").place(x=160,y=120)
         label_glc2=tk.Label(ventana, text="")
         label_glc2.place(x=160,y=120)
      
@@ -225,23 +228,6 @@ def arbol_derivacion(): # Muestra arbol de derivacion previa solicitud del nombr
             ventana.destroy()
 
         # Crear un botón de cierre
-        tk.Button(ventana, text=" Cerrar ", command=cerrar_ventana).place(x=600,y=100)
+        tk.Button(ventana, text=" Cerrar ", command=cerrar_ventana).place(x=740,y=60)
 
-
-    pass
-
-def cargar_archivo_pila(): #permite cargar N autómatas de pila al sistema
-    pass
-
-def informacion_pila():  # Muestra informacion del automata almacenado previamente
-    pass
-
-def validar_cadena_pila(): # Valida una cadena con un automata previamente cargado por el usuario
-    pass
-
-def ruta_validacion_cadena(): #Muestra las transiciones hechas por una cadena ingresada por el usuario, a un automata previamente cargado
-    pass
-
-def recorido_paso_paso(): # Muestra paso a paso el comportamiento del automata al validar una cadena ingresada por el usuario, a un automata previamente cargado
-    pass
 
