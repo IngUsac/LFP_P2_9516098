@@ -24,10 +24,11 @@
 * [x] Sustituir el simbolo ">" por "|" en las transiciones
 * [x] Arbol de derivación  
 * [x] Cargar archivo pila
-* [ ] informacion pila 
+* [x] informacion pila 
 * [x] Validar cadena pila
-* [ ] Ruta_de validacion de cadena
+* [x] Ruta_de validacion de cadena
 * [ ] Mostrar recorido paso a paso
+* [ ] Validar cadena en una sola pasada
 * [x] Desplegar manual de Usuario en Markdown
 * [x] Desplegar manual tecnico en Markdown
 * [x] Pantalla de despedida al cerrar

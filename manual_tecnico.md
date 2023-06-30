@@ -25,10 +25,11 @@
 * [x] Sustituir el simbolo ">" por "|" en las transiciones
 * [x] Arbol de derivación  
 * [x] Cargar archivo pila
-* [ ] informacion pila 
+* [x] informacion pila 
 * [x] Validar cadena pila
-* [ ] Ruta_de validacion de cadena
+* [x] Ruta_de validacion de cadena
 * [ ] Mostrar recorido paso a paso
+* [ ] Validar cadena en una sola pasada
 * [x] Desplegar manual de Usuario en Markdown
 * [x] Desplegar manual tecnico en Markdown
 * [x] Pantalla de despedida al cerrar
@@ -74,7 +75,7 @@ def visualizar_arbol_derivacion(arbol_derivacion) #despliega el arbol por medio 
 def cargar_archivo_pila(): # Permite cargar N Automatas de Pila
 def informacion_pila():     #Permite mostrar la informacionde los Automatas de pila y genera pdf y grafo
 def validar_cadena_pila():  #Permite validar si una cadena ingresada es aceptada o rechazada por el AP seleccionado
-
+def ver_ruta():             # Muestra el recorrido que hizo el autoamata hasta validar la cadena de entrada
 
 # cargarMD.py    Modulo para cargar los manuales de usuario en Markdown
 def abrir_manual_tecnico(): #abre manual tecnico en Markdown

@@ -77,9 +77,9 @@ def ventana_principal():
     # submenu de Modulo autómatas de pila
     sub_menu2.add_command(label="Cargar archivo",command=ap.cargar_archivo_pila)
     sub_menu2.add_command(label="Mostrar información del autómata",command=ap.informacion_pila)
-    sub_menu2.add_command(label="Validar cadena",command=ap.validar_cadena_pila)
-    sub_menu2.add_command(label="Ruta de validación",command=ap.ruta_validacion_cadena)
+    sub_menu2.add_command(label="Validar cadena",command=ap.validar_cadena_pila)    
     sub_menu2.add_command(label="Recorrido paso a paso",command=ap.recorido_paso_paso)
+    sub_menu2.add_command(label="Validar cadena en una pasada",command=ap.validacion_cadena_una_pasada)
     menu_archivo.add_separator()
     menu_archivo.add_command(label="Salir", command=cerrar_ventana)
 

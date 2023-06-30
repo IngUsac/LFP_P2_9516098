@@ -20,6 +20,7 @@ class AutomatasDePila:
 
 archivoentradaAP=""
 global AP_seleccionado
+global transicion_ruta
 global Apila
 Apila = []
 
@@ -124,40 +125,50 @@ def informacion_pila():     #Permite mostrar la informacionde los Automatas de p
                 texto_cuadro.insert(tk.END, "\n"+cadena)  # Insertar el contenido del elemento en el cuadro de texto     
             def generar_grafo_AP():
                 grafo = graphviz.Digraph()                  # Crear un objeto de gráfico dirigido   
-                grafo.attr(rankdir='LR')  
-                for cadena in AP_seleccionado.transiciones:
-                    print("transiciones para grafoAP",cadena)
+                grafo.attr(rankdir='LR')                  
+                for cadena in AP_seleccionado.transiciones:                                    
+                    v_coma = cadena.split(',')
+                    # estado Inicial = v_coma[0]
+                    # en pila = v_coma[1]
+                    v_pc = v_coma[2].split(';')
+                    # sale de pila = v_pc[0]
+                    # estado transicion = v_pc[1]
+                    # mete a pila = v_coma[3]
 
-
-                grafo.node('A')                             # Agregar nodos
-                grafo.node('B')           
-                grafo.edge('A', 'B', label='S0,ε,ε;S1,#')    # Agregar una flecha de transición con etiqueta          
-                grafo.render('grafoAP', format='png')       # Renderizar y guardar el gráfico en un archivo
+                    
+                    A=v_coma[0]                             # Asigna estado inicial                             
+                    grafo.node(str(A))                      # Genera nodo
+                    mov=(v_coma[1]+","+v_pc[0]+";"+v_coma[3])       # Genera transicion
+                    B=v_pc[1]                               # Asigna Nodo destino
+                    grafo.node(str(B))                      # Genera nodo
+                    grafo.edge(A, B, label=mov)             # Agregar una flecha de transición con etiqueta        
+                       
+                grafo.render('grafoAP', format='png')   # Renderizar y guardar el gráfico en un archivo
                 
                       
             def generar_pdf():
                 # Crear un documento PDF
                 pdf_filename = "reporteAP.pdf"
                 c = canvas.Canvas(pdf_filename, pagesize=letter)               
-                c.setFont("Helvetica", 12)
-
                 # Escribir la información en el PDF
-                c.drawString(100, 800, " Reporte del Automata de Pila")
-                c.drawString(100, 750, f" -Nombre: {AP_seleccionado.nombre}")
-                c.drawString(100, 730, f" -Alfabeto: {AP_seleccionado.alfabeto}")
-                c.drawString(100, 710, f" -Simbolos: {AP_seleccionado.simbolos}")
-                c.drawString(100, 690, f" -Estado Inicial: {AP_seleccionado.s_inicial}")
-                c.drawString(100, 670, f" -Estado de Aceptacion: {AP_seleccionado.aceptacion}")
-                c.drawString(100, 650, f" -Transiciones:")
+                c.setFont("Helvetica-Bold", 16)
+                c.drawString(100, 700, " Reporte del Automata de Pila")
+                c.setFont("Helvetica", 12)
+                c.drawString(100, 650, f" -Nombre: {AP_seleccionado.nombre}")
+                c.drawString(100, 630, f" -Alfabeto: {AP_seleccionado.alfabeto}")
+                c.drawString(100, 610, f" -Simbolos: {AP_seleccionado.simbolos}")
+                c.drawString(100, 590, f" -Estado Inicial: {AP_seleccionado.s_inicial}")
+                c.drawString(100, 570, f" -Estado de Aceptacion: {AP_seleccionado.aceptacion}")
+                c.drawString(100, 550, f" -Transiciones:")
                 i=110
                 for cadena in AP_seleccionado.transiciones:
                     i-=20
-                    c.drawString(150, 530+i, cadena)
+                    c.drawString(150, 430+i, cadena)
                 
                 imagen_filename = "Logo_Ingenieria.jpg"
                 c.drawImage(imagen_filename, 25, 725, width=50, height=50)
                 generar_grafo_AP()
-                c.drawImage('grafoAP.png', 100, 400,width=200, height=100)        # grabar en el pdf la imagen creada en el paso anterior
+                c.drawImage('grafoAP.png', 100, 300,width=450, height=150)        # grabar en el pdf la imagen creada en el paso anterior
  
                 c.save()                       # Guardar y cerrar el PDF
 
@@ -228,20 +239,37 @@ def validar_cadena_pila():  #Permite validar si una cadena ingresada es aceptada
           
             tk.Label(ventana, text=" Transiciones: ").place(x=150,y=170)
             texto_cuadro.delete("1.0", tk.END)  # Borrar contenido previo del cuadro de texto
+            texto_cuadro_ruta.delete("1.0", tk.END)  # Borrar contenido previo del cuadro de texto
             for tansc in AP_seleccionado.transiciones:
                 texto_cuadro.insert(tk.END, "\n"+tansc)  # Insertar el contenido del elemento en el cuadro de texto     
             def validaC():
+                tk.Label(ventana, text="-------------------").place(x=300,y=100)
                 cadena = str(entry2.get())
-                validar_cadena(AP_seleccionado,cadena)
+                ruta=[]
+                aceptada=False
+                aceptada= validar_cadena(AP_seleccionado,cadena,ruta,aceptada)
+                if aceptada:
+                    tk.Label(ventana, text=" Cadena Aceptada ").place(x=300,y=100)
+                else:
+                    tk.Label(ventana, text=" Cadena Rechazada ").place(x=300,y=100)
+                def ver_ruta():
+                    texto_cuadro_ruta.delete("1.0", tk.END)
+                    tk.Label(ventana, text=" Ruta: ").place(x=400,y=170)
+                    for tran in ruta:
+                        texto_cuadro_ruta.insert(tk.END, "\n"+str(tran))  # Insertar el contenido del elemento en el cuadro de texto     
+                        
+                tk.Button(ventana, text="Ver Ruta", command=ver_ruta).place(x=600,y=110)
+
+
 
             entry2 = tk.Entry(ventana)
-            entry2.place(x=450,y=80)
+            entry2.place(x=450,y=85)
             
             for tansc in AP_seleccionado.transiciones:
                 #print(tansc)
                 pass
             
-            tk.Label(ventana, text=" Ingrese la cadena a Validar ").place(x=300,y=80)
+            tk.Label(ventana, text=" Ingrese la cadena a Validar ").place(x=300,y=85)
             tk.Button(ventana, text="Validar Cadena", command=validaC).place(x=600,y=80)
           
             
@@ -251,7 +279,7 @@ def validar_cadena_pila():  #Permite validar si una cadena ingresada es aceptada
         else:
             messagebox.showinfo("Seleccionar de Gramática", "Numero de Gramatica invalido")
             texto_cuadro.delete("1.0", tk.END)  # Borrar contenido previo del cuadro de texto
-            
+            texto_cuadro_ruta.delete("1.0", tk.END)  # Borrar contenido previo del cuadro de texto
     
             label_glc1.config(text=" ")
             label_glc1.place(x=150,y=140)
@@ -288,8 +316,10 @@ def validar_cadena_pila():  #Permite validar si una cadena ingresada es aceptada
         
      
 
-        texto_cuadro = tk.Text(ventana, height=15, width=75)
+        texto_cuadro = tk.Text(ventana, height=15, width=30)
         texto_cuadro.place(x=150,y=200)
+        texto_cuadro_ruta = tk.Text(ventana, height=15, width=30)
+        texto_cuadro_ruta.place(x=400,y=200)
        
 
                # Función para cerrar la ventana
@@ -300,17 +330,9 @@ def validar_cadena_pila():  #Permite validar si una cadena ingresada es aceptada
         tk.Button(ventana, text="  Cerrar   ", command=cerrar_ventana).place(x=675,y=50)
  
 
-def ruta_validacion_cadena():
-    pass
 def recorido_paso_paso():
-    pass
+    messagebox.showinfo("Recorrido Paso a Paso", " En construcción...")
  
+def validacion_cadena_una_pasada():
+    messagebox.showinfo("Validación en una pasada", "En construcción...")
 
-"""
-Cargar archivo
-Mostrar información del autómata
-Validar cadena
-Ruta de validación
-Recorrido paso a paso
-
-""" 
