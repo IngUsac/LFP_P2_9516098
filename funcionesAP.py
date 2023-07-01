@@ -1,10 +1,11 @@
 import tkinter as tk
+from tkinter import ttk
 import graphviz
 from tkinter import filedialog
 from tkinter import messagebox
+from reportlab.platypus import SimpleDocTemplate, Table
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
-from generarderivacion import genera_arbol_derivacion
 from manejaAP import validar_cadena
 
 class AutomatasDePila:
@@ -23,6 +24,9 @@ global AP_seleccionado
 global transicion_ruta
 global Apila
 Apila = []
+ruta=[]
+tabla_una_pasada = [[], [], [], []]
+
 
 def cargar_archivo_pila(): # Permite cargar N Automatas de Pila
 
@@ -246,8 +250,10 @@ def validar_cadena_pila():  #Permite validar si una cadena ingresada es aceptada
                 tk.Label(ventana, text="-------------------").place(x=300,y=100)
                 cadena = str(entry2.get())
                 ruta=[]
+                tabla_una_pasada = [[], [], [], []]
                 aceptada=False
-                aceptada= validar_cadena(AP_seleccionado,cadena,ruta,aceptada)
+              
+                aceptada= validar_cadena(AP_seleccionado,cadena,ruta,aceptada,tabla_una_pasada)
                 if aceptada:
                     tk.Label(ventana, text=" Cadena Aceptada ").place(x=300,y=100)
                 else:
@@ -257,10 +263,63 @@ def validar_cadena_pila():  #Permite validar si una cadena ingresada es aceptada
                     tk.Label(ventana, text=" Ruta: ").place(x=400,y=170)
                     for tran in ruta:
                         texto_cuadro_ruta.insert(tk.END, "\n"+str(tran))  # Insertar el contenido del elemento en el cuadro de texto     
+
+                def paso_paso():
+                    nueva_ventana = tk.Toplevel()
+                    nueva_ventana.title("Paso a Paso")
+                    nueva_ventana.geometry("500x200")
+                    label = tk.Label(nueva_ventana, text="No me dio tiempo Aux :D",foreground="blue",font=("Arial", 20))
+                    label.grid(sticky="nsew")           
+                    
+                    
+                    boton_regresar = ttk.Button(nueva_ventana, text="Regresar", command=nueva_ventana.destroy)   # Agrega un botón de regresar
+                    boton_regresar.place(x=100,y=100)  
+   
+                def una_pasada():
+                    tabla = ttk.Treeview(ventana)
+                    
+                    tabla["columns"] = ("Iteración", "Pila", "Entrada", "Transición")                           # Configurar columnas
+                    tabla.heading("#0", text="Una Pasada")
+                    tabla.column("#0", width=100)
+                    tabla.delete()
+                    if len(tabla_una_pasada) > 0:                                            # Insertar tabla de datos a ventana 
+                        lista_transpuesta = list(map(list, zip(*tabla_una_pasada)))  # Cambia los valores de la fila hacia la columna
+                        for columna in tabla["columns"]:
+                            tabla.heading(columna, text=columna)
+                            tabla.column(columna, width=100)
+
+                        for i, fila in enumerate(lista_transpuesta):   # Insertar datos
+                            tabla.insert(parent='', index='end', iid=i, values=fila)
+                    
+                    tabla.place(x=155,y=385)    # ubicacion de la tabla 
+
+
+
+                    # generar tabla en pdf
+                    def guardar_tabla_pdf(lista_transpuesta):
+                        # Crear un archivo PDF
+                        doc = SimpleDocTemplate("tabla.pdf", pagesize=letter)
+
+                        # Crear la tabla con los datos
+                        tabla = Table(lista_transpuesta)
+
+                        # Establecer estilos para la tabla
+                        estilo_tabla = [("GRID", (0, 0), (-1, -1), 0.5, "black")]
+                        tabla.setStyle(estilo_tabla)
+
+                        # Agregar la tabla al documento PDF
+                        elementos = [tabla]
+                        doc.build(elementos)
+
+                    #guardar_tabla_pdf(tabla_una_pasada)
+
+
+
+
                         
-                tk.Button(ventana, text="Ver Ruta", command=ver_ruta).place(x=600,y=110)
-
-
+                tk.Button(ventana, text="Ver Ruta", command=ver_ruta).place(x=720,y=80)       
+                tk.Button(ventana, text="Paso a paso", command=paso_paso).place(x=720,y=110)        
+                tk.Button(ventana, text="Una pasada", command=una_pasada).place(x=720,y=140)
 
             entry2 = tk.Entry(ventana)
             entry2.place(x=450,y=85)
@@ -272,10 +331,6 @@ def validar_cadena_pila():  #Permite validar si una cadena ingresada es aceptada
             tk.Label(ventana, text=" Ingrese la cadena a Validar ").place(x=300,y=85)
             tk.Button(ventana, text="Validar Cadena", command=validaC).place(x=600,y=80)
           
-            
-            
-      
-
         else:
             messagebox.showinfo("Seleccionar de Gramática", "Numero de Gramatica invalido")
             texto_cuadro.delete("1.0", tk.END)  # Borrar contenido previo del cuadro de texto
@@ -291,13 +346,9 @@ def validar_cadena_pila():  #Permite validar si una cadena ingresada es aceptada
         messagebox.showinfo("Validación de Gramática", "La pila está vacía")
     else:
         
-
-
-
-    # Crear una nueva ventana
-        ventana = tk.Toplevel()
+        ventana = tk.Toplevel()      # Crear una nueva ventana
         ventana.title("AP Válidos")
-        ventana.geometry("800x600")
+        ventana.geometry("800x650")
 
         tk.Label(ventana, text="Listado de Automatas de Pila disponibles").place(x=25,y=20)
 
@@ -313,26 +364,23 @@ def validar_cadena_pila():  #Permite validar si una cadena ingresada es aceptada
         tk.Label(ventana, text=" Informacion del Automata de Pila: ").place(x=150,y=120)
         label_glc1=tk.Label(ventana, text="")
         label_glc1.place(x=150,y=140)
-        
      
-
-        texto_cuadro = tk.Text(ventana, height=15, width=30)
+        texto_cuadro = tk.Text(ventana, height=10, width=30)
         texto_cuadro.place(x=150,y=200)
-        texto_cuadro_ruta = tk.Text(ventana, height=15, width=30)
+        texto_cuadro_ruta = tk.Text(ventana, height=10, width=30)
         texto_cuadro_ruta.place(x=400,y=200)
-       
-
-               # Función para cerrar la ventana
-        def cerrar_ventana():
+     
+     
+        def cerrar_ventana():          # Función para cerrar la ventana
             ventana.destroy()
 
         # Crear un botón de cierre
-        tk.Button(ventana, text="  Cerrar   ", command=cerrar_ventana).place(x=675,y=50)
+        tk.Button(ventana, text="  Cerrar   ", command=cerrar_ventana).place(x=720,y=50)
  
 
 def recorido_paso_paso():
-    messagebox.showinfo("Recorrido Paso a Paso", " En construcción...")
+    messagebox.showinfo("Recorrido Paso a Paso", " Ver en Validar Cadena")
  
 def validacion_cadena_una_pasada():
-    messagebox.showinfo("Validación en una pasada", "En construcción...")
+    messagebox.showinfo("Validación en una pasada", "Ver en Validar Cadena")
 

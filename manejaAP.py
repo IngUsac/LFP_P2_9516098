@@ -9,50 +9,83 @@ class AutomataPila:
         self.funciones_transicion = funciones_transicion
         self.pilaAP = []
         self.estado_actual = estado_inicial
-        global acepta
+
         
-        
-    def transicion(self, simbolo_entrada,ruta):
-        global acepta  
-       
-        acepta=False
-      
+    def transicion(self, simbolo_entrada,ruta,tabla_una_pasada,i):
+        print ("i-> ",i)
         for funcion in self.funciones_transicion:
-            estado_actual, simbolo_lectura, simbolo_pila_lectura, estado_siguiente, simbolos_a_apilar = funcion                       
+            estado_actual, simbolo_lectura, simbolo_pila_lectura, estado_siguiente, simbolos_a_apilar = funcion                      
             if (estado_actual == self.estado_actual and simbolo_lectura == 'ε' and simbolo_pila_lectura == 'ε'):
                 self.estado_actual = estado_siguiente  #insertar en pila el simbolo # inicial                 
                 self.pilaAP = [simbolos_a_apilar]
                 ruta.append(funcion)
-                          
+                tabla_una_pasada[0].append(i)
+                tabla_una_pasada[1].append("-")
+                tabla_una_pasada[2].append("-")
+                tabla_una_pasada[3].append(str(estado_actual)+str(simbolo_lectura)+str(simbolo_pila_lectura)+str(simbolos_a_apilar)+str( estado_siguiente))
+                i+=1
+  
             if ( estado_actual == self.estado_actual and simbolo_lectura == simbolo_entrada ):              
                 self.estado_actual = estado_siguiente
-                acepta=True                
-                if simbolo_pila_lectura != 'ε':                    
+                                
+                if simbolo_pila_lectura != 'ε' and simbolos_a_apilar == 'ε':
                     self.pilaAP.pop()
-                    if self.pilaAP[-1] == "#":
-                        self.pilaAP.pop()
-                        self.estado_actual = self.estado_final
-                        ruta.append(funcion)                        
-                if simbolo_pila_lectura == 'ε' and simbolos_a_apilar != '#':
+                    self.estado_actual = estado_siguiente
+                    ruta.append(funcion)      
+                   
+                    tabla_una_pasada[0].append(i)
+                    tabla_una_pasada[1].append(self.pilaAP)
+                    tabla_una_pasada[2].append(simbolo_entrada)
+                    tabla_una_pasada[3].append(str(estado_actual)+str(simbolo_lectura)+str(simbolo_pila_lectura)+str(simbolos_a_apilar)+str( estado_siguiente))
+                    break
+            
+                if simbolo_pila_lectura == 'ε' and simbolos_a_apilar == simbolo_entrada :
+                    self.estado_actual = estado_siguiente
                     for simbolo in reversed(simbolos_a_apilar):
-                        self.pilaAP.append(simbolo)                       
-                        ruta.append(funcion)
-                break
+                        self.pilaAP.append(simbolo)
+                    ruta.append(funcion)
+              
+                    tabla_una_pasada[0].append(i)
+                    tabla_una_pasada[1].append(self.pilaAP)
+                    tabla_una_pasada[2].append(simbolo_entrada)
+                    tabla_una_pasada[3].append(str(estado_actual)+str(simbolo_lectura)+str(simbolo_pila_lectura)+str(simbolos_a_apilar)+str( estado_siguiente))
+                    break
+          
+            if simbolo_pila_lectura == '#'and  simbolos_a_apilar == 'ε':  
+                self.estado_actual = estado_siguiente
+                if self.estado_actual == self.estado_final:
+                    self.pilaAP.pop()
+                    self.estado_actual = self.estado_final
+                    ruta.append(funcion) 
+                   
+                    tabla_una_pasada[0].append(i)
+                    tabla_una_pasada[1].append(self.pilaAP)
+                    tabla_una_pasada[2].append(simbolo_entrada)
+                    tabla_una_pasada[3].append(str(estado_actual)+str(simbolo_lectura)+str(simbolo_pila_lectura)+str(simbolos_a_apilar)+str( estado_siguiente))
+                    break
 
-    def acepta_cadena(self, cadena,ruta):
-        global acepta
+
+
+    def acepta_cadena(self, cadena,ruta,tabla_una_pasada):
+        
+        i= -1
+        cadena=cadena
         self.estado_actual = self.estado_inicial
-        for simbolo in cadena:            
-            if simbolo not in self.alfabeto_entrada: # si un simbolo no esta en el alfabeto de entrada no acepta la cadena
-                acepta = False
+        for simbolo in cadena:  
+            i+=1
+               
+            if simbolo not in self.alfabeto_entrada : # si un simbolo no esta en el alfabeto de entrada no acepta la cadena
                 return False
-            self.transicion(simbolo,ruta)        
-        return self.estado_actual == self.estado_final and len(self.pilaAP) == 0 and acepta
+            self.transicion(simbolo,ruta,tabla_una_pasada,i)  
+        
+        if len(self.pilaAP)==1:
+            self.transicion("#",ruta,tabla_una_pasada,i)   
+        return self.estado_actual == self.estado_final and len(self.pilaAP) == 0 
 
-def validar_cadena(Ap_seleccionado,cadena,ruta,aceptada): #Valida la cadena ingresada por el usuario
+def validar_cadena(Ap_seleccionado,cadena,ruta,aceptada,tabla_una_pasada): #Valida la cadena ingresada por el usuario
     # Datos del autómata de pila
     ap1 =Ap_seleccionado
-        
+    
   # Datos del autómata de pila entrante:  nombre, alfabeto, simbolos, estados, s_inicial, aceptacion, transiciones
     nombreAP=ap1.nombre
     alfabeto_entrada =  ap1.alfabeto
@@ -76,7 +109,7 @@ def validar_cadena(Ap_seleccionado,cadena,ruta,aceptada): #Valida la cadena ingr
     automata = AutomataPila(nombreAP,estados, alfabeto_entrada, alfabeto_pila, estado_inicial, estado_final, lista_funciones_transicion)
 
     # Prueba de cadenas
-    if automata.acepta_cadena(cadena.strip(),ruta):
+    if automata.acepta_cadena(cadena.strip(),ruta,tabla_una_pasada):
         aceptada=True
         return aceptada 
     else:
