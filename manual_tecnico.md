@@ -28,13 +28,13 @@
 * [x] informacion pila 
 * [x] Validar cadena pila
 * [x] Ruta_de validacion de cadena
-* [ ] Mostrar recorido paso a paso
-* [x] Validar cadena en una sola pasada
+* [x] Mostrar recorido paso a paso
+* [ ] Validar cadena en una sola pasada   🦾😮‍💨en construccion
 * [x] Desplegar manual de Usuario en Markdown
 * [x] Desplegar manual tecnico en Markdown
 * [x] Pantalla de despedida al cerrar
 
-😮‍💨
+
 ---
 
 ### Funciones principalesdeclaradas 👾 

@@ -109,7 +109,33 @@ Se puede verificar la ruta paso a paso
 
 ![Texto](Imagenes/U23.jpg)
 
-se puede verificar la ruta de una sola pasada 
+Al presionar el boton Ver Automata de Pila se muestra el primer movimiento
+
+![Texto](Imagenes/U23-1.jpg)
+
+Al presionar Enter se van mostrando los siguientes movimientos
+
+Segundo mvimiento
+
+![Texto](Imagenes/U23-2.jpg)
+
+Tercer movimiento
+
+![Texto](Imagenes/U23-3.jpg)
+
+Cuarto movimiento
+
+![Texto](Imagenes/U23-4.jpg)
+
+Quinto movimiento
+
+![Texto](Imagenes/U23-5.jpg)
+
+Sexto movimiento
+
+![Texto](Imagenes/U23-6.jpg)
+
+Se puede verificar la ruta de una sola pasada 
 
 ![Texto](Imagenes/U24.jpg)
 
@@ -134,7 +160,7 @@ Al finalizar la aplicacion en la opcion salir del menu principal muestra una pan
 
 ---
 
-### Funcionalidad 👾 
+### Funcionalidad 👾 al 98%
 
 ---
 ## Repositorio del proyecto 

@@ -12,7 +12,7 @@ class AutomataPila:
 
         
     def transicion(self, simbolo_entrada,ruta,tabla_una_pasada,i):
-        print ("i-> ",i)
+        
         for funcion in self.funciones_transicion:
             estado_actual, simbolo_lectura, simbolo_pila_lectura, estado_siguiente, simbolos_a_apilar = funcion                      
             if (estado_actual == self.estado_actual and simbolo_lectura == 'ε' and simbolo_pila_lectura == 'ε'):
@@ -115,97 +115,3 @@ def validar_cadena(Ap_seleccionado,cadena,ruta,aceptada,tabla_una_pasada): #Vali
     else:
         aceptada=False
         return aceptada 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-""" 
-class AutomataPila:
-    def __init__(self, estados, alfabeto_entrada, alfabeto_pila, estado_inicial, estado_final, funciones_transicion):
-        self.estados = estados
-        self.alfabeto_entrada = alfabeto_entrada
-        self.alfabeto_pila = alfabeto_pila
-        self.estado_inicial = estado_inicial
-        self.estado_final = estado_final
-        self.funciones_transicion = funciones_transicion
-        self.pila = []
-        self.estado_actual = estado_inicial
-
-    def transicion(self, simbolo_entrada):
-        for funcion in self.funciones_transicion:
-            estado_actual, simbolo_lectura, simbolo_pila_lectura, estado_siguiente, simbolos_a_apilar = funcion
-            if (
-                estado_actual == self.estado_actual
-                and simbolo_lectura == simbolo_entrada
-                and (simbolo_pila_lectura == self.pila[-1] or simbolo_pila_lectura == 'ε')
-            ):
-                self.estado_actual = estado_siguiente
-                self.pila.pop()
-                if simbolos_a_apilar != 'ε':
-                    for simbolo in reversed(simbolos_a_apilar):
-                        self.pila.append(simbolo)
-                break
-
-    def acepta_cadena(self, cadena):
-        self.estado_actual = self.estado_inicial
-        self.pila = ['#']
-        for simbolo in cadena:
-            if simbolo not in self.alfabeto_entrada:
-                return False
-            self.transicion(simbolo)
-        return self.estado_actual == self.estado_final and self.pila == ['#']
-
-
-# Datos del autómata de pila
-alfabeto_entrada = ['a', 'b']
-alfabeto_pila = ['a', 'b', '#']
-estados = ['I', 'A', 'B', 'C', 'F']
-estado_inicial = 'I'
-estado_final = 'F'
-funciones_transicion = [
-    ['I', 'ε', 'ε', 'A', '#'],
-    ['A', 'a', 'ε', 'B', 'a'],
-    ['B', 'a', 'ε', 'B', 'a'],
-    ['B', 'b', 'a', 'C', 'ε'],
-    ['C', 'b', 'a', 'C', 'ε'],
-    ['C', 'ε', '#', 'F', 'ε']
-]
-
-# Crear instancia del autómata de pila
-automata = AutomataPila(estados, alfabeto_entrada, alfabeto_pila, estado_inicial, estado_final, funciones_transicion)
-
-# Prueba de cadenas
-cadenas = ['ab', 'abb', 'abba', 'aabb', 'aabba']
-for cadena in cadenas:
-    if automata.acepta_cadena(cadena):
-        print(f"Cadena '{cadena}': Aceptada")
-    else:
-        print(f"Cadena '{cadena}': Rechazada")""" 

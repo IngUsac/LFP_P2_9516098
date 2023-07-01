@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import graphviz
+import keyboard
 from tkinter import filedialog
 from tkinter import messagebox
 from reportlab.platypus import SimpleDocTemplate, Table
@@ -268,13 +269,52 @@ def validar_cadena_pila():  #Permite validar si una cadena ingresada es aceptada
                     nueva_ventana = tk.Toplevel()
                     nueva_ventana.title("Paso a Paso")
                     nueva_ventana.geometry("500x200")
-                    label = tk.Label(nueva_ventana, text="No me dio tiempo Aux :D",foreground="blue",font=("Arial", 20))
-                    label.grid(sticky="nsew")           
+                    labelp = tk.Label(nueva_ventana, text="Validacion Paso a Paso",foreground="blue",font=("Arial", 20))
+                    labelp.place(x=50,y=10)    
+                    labelinfo = tk.Label(nueva_ventana, text="Presione Enter para ver el siguiente Paso",foreground="green",font=("Arial", 16))
+                    labelinfo.place(x=50,y=130)      
+
+                    #----------------------------------------------------------------              
+                        # llamar funcion para ver grafo paso a paso   
+             
                     
+                    def generar_grafo_AP():
+                        grafo = graphviz.Digraph()                  # Crear un objeto de gráfico dirigido   
+                        grafo.attr(rankdir='LR')       
+                        
+                        def pausar_ciclo():
+                            
+                            keyboard.wait('enter')  # Espera hasta que se presione la tecla "Enter"
+                              
+                        for cadena in AP_seleccionado.transiciones:
+                            v_coma = cadena.split(',')
+                            # estado Inicial = v_coma[0]
+                            # en pila = v_coma[1]
+                            v_pc = v_coma[2].split(';')
+                            # sale de pila = v_pc[0]
+                            # estado transicion = v_pc[1]
+                            # mete a pila = v_coma[3]
+
+                            A=v_coma[0]                                 # Asigna estado inicial               
+                            grafo.node(str(A), fillcolor="green")       # Genera nodo
+                            mov=(v_coma[1]+","+v_pc[0]+";"+v_coma[3])   # Genera transicion
+                            B=v_pc[1]                                   # Asigna Nodo destino
+                            grafo.node(str(B), fillcolor="yellow")                          # Genera nodo
+                            grafo.edge(A, B, label=mov)                 # Agregar una flecha de transición con etiqueta        
+                            
+                            grafo.render('grafoPaP', format='png', view=True)   # Renderizar y muestra el gráfico en pantalla
+                            pausar_ciclo()
+
+
+                    #----------------------------------------------------------------
+                
+                    boton_cerrar = ttk.Button(nueva_ventana, text="Cerrar", command=nueva_ventana.destroy)   # Agrega un botón de regresar
+                    boton_cerrar.place(x=100,y=100)  
+                    boton_pap = ttk.Button(nueva_ventana, text="Ver Automata de Pila", command=generar_grafo_AP)   # ver el grafo paso a paso
+                    boton_pap.place(x=200,y=100)  
+
+                
                     
-                    boton_regresar = ttk.Button(nueva_ventana, text="Regresar", command=nueva_ventana.destroy)   # Agrega un botón de regresar
-                    boton_regresar.place(x=100,y=100)  
-   
                 def una_pasada():
                     tabla = ttk.Treeview(ventana)
                     
